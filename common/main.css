@@ -58,6 +58,10 @@ textarea {
    html {
      background-color: #5a5a5a;
    }
+   
+   .header {
+     text-transform: uppercase;
+   }
 
    .frame {
      background-color: rgb(198, 198, 198);
