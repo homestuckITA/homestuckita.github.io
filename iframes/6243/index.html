@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--650px-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>6243</title>
+
+    <script src="/assets/jquery-1.11.3.min.js"></script>
+
+    <script src="/assets/createjs-1.0.0.min.js"></script>
+    <script src="/assets/TweenLite-1.20.3.min.js"></script>
+    <script src="/assets/EaselPlugin-1.20.3.min.js"></script>
+
+    <script>
+        $.browser = {}
+    </script>
+    <script src="glowfilter.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body onload="init();">
+    <script>
+        $(document).ready(function () {
+            // Make content area responsive during preload
+
+            var $content_container = $("#content_container");
+            var $anim_container = $("#animation_container");
+            var $_preload_div_ = $("#_preload_div_");
+            var w = $anim_container.width(),
+                h = $anim_container.height();
+            var iw = $content_container.width(),
+                ih = $content_container.height();
+            var pw = $_preload_div_.width(),
+                ih = $_preload_div_.height();
+            var pRatio = window.devicePixelRatio || 1,
+                xRatio = iw / w,
+                yRatio = ih / h,
+                sRatio = 1,
+                psRatio = 1;;
+
+            if ($.browser.mobile === true) {
+                $anim_container.width(w * xRatio + 'px');
+                $anim_container.height(h * xRatio + 'px');
+            } else {
+                $_preload_div_.css('left', ((iw - (pw)) / 2) + 'px');
+            }
+
+        });
+    </script>
+
+    <div id="content_container" class="mar-x-auto disp-bl bg-a6a6-mid-green" style="max-width:650px;">
+        <!-- <h2 class="pad-t-md pad-x-lg--md type-center type-hs-header line-tight">[S] ACT 6 ACT 6</h2> -->
+        <div class="pos-r pad-t-md">
+            <div id="animation_container" class="bg-a6a6-mid-green" style="width:650px; 
+            height:567px;">
+                <canvas id="canvas" width="650" height="567" style="position: absolute; display: block; width: 650px; height: 567px;"></canvas>
+                <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:650px; height:567px; position: absolute; left: 0px; top: 0px; display: none;">
+                </div>
+            </div>
+            <div id="_preload_div_" style="position: absolute; top: 0px; left: 0px; display: none; text-align: center;">
+                <img src="https://www.homestuck.com/images/storyfiles/hs2/_preloader.gif" style="vertical-align: middle; max-height: 100%">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
