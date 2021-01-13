@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html style="overflow:hidden;">
+  <head>
+    <title>31 TEST</title>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        margin:0;
+        padding:0;
+      }
+      
+      body {
+        width:650px;
+        height:450px;
+      }
+      
+      #playback, .interact {
+        position:absolute;
+        top:0;
+        left:0;
+        width:650px;
+        height:450px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="playback">
+      <video width="650" height="450" autoplay loop>
+            <source src="video.webm" type="video/webm" />
+            Il tuo browser non supporta questo formato.
+            Aggiorna il tuo browser per visualizzare questa animazione.
+      </video>
+        <div class="interact">
+        <p style="opacity:0;">Workaround</p>
+      </div>
+    <script src="script.js"></script>
+    </div>
+  </body>
+</html>
