@@ -4,7 +4,7 @@
 window.onload = function() {
 
   // Put the location of the images here!
-  var Prefix = "/Images/Homestuck/31/";
+  var Prefix = "https://homestuckITA.github.io/new animations/31/";
 
   /* LINKS */
   var BQLink = "https://homestuck.com/bard-quest";
