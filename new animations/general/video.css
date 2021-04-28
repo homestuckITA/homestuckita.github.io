@@ -1,0 +1,29 @@
+@keyframes blink {
+	0% {filter:brightness(100%);}
+	100% {filter:brightness(115%);}
+}
+
+#replay {
+	animation: blink 1.5s infinite;
+	animation-direction:alternate;
+	animation-timing-function: ease;
+	position:absolute;
+	top:430px;
+	left:1px;
+	cursor:pointer;
+}
+
+#volume {
+	position:absolute;
+	top:0px;
+	left:0px;
+	cursor:pointer;
+}
+
+.startvideo {
+	filter:brightness(100%);
+}
+
+.startvideo:hover {
+	filter:brightness(115%);
+}
