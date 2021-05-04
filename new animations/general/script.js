@@ -3,8 +3,12 @@
 
 window.onload = function() {
 
-  // Prefix for images & stuff
-  var Prefix = "https://homestuckITA.github.io/new animations/general/";
+  /* STRINGS (translate as needed) */
+
+  var HiQualityStr = "WYSOKA JAKOŚĆ";
+  var LoQualityStr = "NISKA JAKOŚĆ";
+
+  /* -------- */
 
   var Video = document.getElementById("video");
   var Audio = document.getElementById("audio");
@@ -13,29 +17,37 @@ window.onload = function() {
   var LoadingState = 0;
 
   var PlayAgain = document.createElement("img");
-  PlayAgain.setAttribute("src", Prefix + "arrow.png");
+  PlayAgain.setAttribute("src", "/Images/Homestuck/GenericVideo/arrow.png");
   PlayAgain.setAttribute("id", "replay");
 
   var Volume = document.createElement("img");
-  Volume.setAttribute("src", Prefix + "volumefull.png");
+  Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volumefull.png");
   Volume.setAttribute("id", "volume");
   var VolumeState = 0;
 
-  LoadingScreen = document.createElement("img");
+  var LoadingScreen = document.createElement("img");
   LoadingScreen.setAttribute("style", "position:absolute; top:0px; left:0px;");
-  LoadingScreen.setAttribute("src", Prefix + "loadingbg.gif");
+  LoadingScreen.setAttribute("src", "/Images/Homestuck/GenericVideo/loadingbg.gif");
 
   InteractDiv.appendChild(LoadingScreen);
 
-  LoadingButton = document.createElement("img");
-  LoadingButton.setAttribute("src", Prefix + "start.png");
+  var LoadingButton = document.createElement("img");
+  LoadingButton.setAttribute("src", "/Images/Homestuck/GenericVideo/start.png");
   LoadingButton.setAttribute("style", "position:absolute; top:365px; left:220.5px;cursor:pointer;");
 
-  LoadingProgressVideo = document.createElement("p");
+  var LoadingProgressVideo = document.createElement("p");
   LoadingProgressVideo.setAttribute("style", "position:absolute; top:370px; left:0; width:100%; color:black; text-align:center;");
 
-  LoadingProgressAudio = document.createElement("p");
+  var LoadingProgressAudio = document.createElement("p");
   LoadingProgressAudio.setAttribute("style", "position:absolute; top:390px; left:0; width:100%; color:black; text-align:center;");
+
+  var HiButton = document.createElement("p");
+  HiButton.setAttribute("style", "position:absolute; top:370px; left:0; width:100%; color:black; text-align:center; font-size:25px; text-decoration:underline; cursor:pointer;");
+  HiButton.innerHTML = HiQualityStr;
+
+  var LoButton = document.createElement("p");
+  LoButton.setAttribute("style", "position:absolute; top:400px; left:0; width:100%; color:black; text-align:center; font-size:25px; text-decoration:underline; cursor:pointer;");
+  LoButton.innerHTML = LoQualityStr;
 
   /* LOADING SUBVIDEOS */
 
@@ -43,19 +55,79 @@ window.onload = function() {
   var VideoRequest = new XMLHttpRequest();
 
   var VideoBlob, AudioBlob;
+  // detect if we have the lo-quality option
 
-  var AudioURL = Audio.getAttribute("filesrc");
-  var VideoURL = Video.getAttribute("filesrc");
+  if(Video.getAttribute("lofilesrc") != null) {
+    // show the option
+    HiButton.addEventListener("click", ()=>{
+      var AudioURL = Audio.getAttribute("filesrc");
+      var VideoURL = Video.getAttribute("filesrc");
+      AudioRequest.open('GET', AudioURL, true);
+      VideoRequest.open('GET', VideoURL, true);
+      AudioRequest.responseType = "blob";
+      VideoRequest.responseType = "blob";
+      AudioRequest.send();
+      VideoRequest.send();
+      InteractDiv.removeChild(HiButton);
+      InteractDiv.removeChild(LoButton);
+      InteractDiv.appendChild(LoadingProgressVideo);
+      InteractDiv.appendChild(LoadingProgressAudio);
+    })
 
-  AudioRequest.open('GET', AudioURL, true);
-  VideoRequest.open('GET', VideoURL, true);
-  AudioRequest.responseType = "blob";
-  VideoRequest.responseType = "blob";
-  AudioRequest.send();
-  VideoRequest.send();
+    LoButton.addEventListener("click", ()=>{
+      var AudioURL = Audio.getAttribute("filesrc");
+      var VideoURL = Video.getAttribute("lofilesrc");
+      AudioRequest.open('GET', AudioURL, true);
+      VideoRequest.open('GET', VideoURL, true);
+      AudioRequest.responseType = "blob";
+      VideoRequest.responseType = "blob";
+      AudioRequest.send();
+      VideoRequest.send();
+      InteractDiv.removeChild(HiButton);
+      InteractDiv.removeChild(LoButton);
+      InteractDiv.appendChild(LoadingProgressVideo);
+      InteractDiv.appendChild(LoadingProgressAudio);
+    })
 
-  InteractDiv.appendChild(LoadingProgressVideo);
-  InteractDiv.appendChild(LoadingProgressAudio);
+    /* Probe size */
+
+    var HiSizeReq = new XMLHttpRequest();
+    var LoSizeReq = new XMLHttpRequest();
+
+    HiSizeReq.open('HEAD', Video.getAttribute("filesrc"), true);
+    LoSizeReq.open('HEAD', Video.getAttribute("lofilesrc"), true);
+
+    HiSizeReq.send();
+    LoSizeReq.send();
+
+    HiSizeReq.addEventListener("load", ()=> {
+      var FSize = Math.ceil(HiSizeReq.getResponseHeader('content-length') / 1024 / 1024 * 100)/100;
+      HiButton.innerText += " (" + FSize + " MB)";
+    });
+
+    LoSizeReq.addEventListener("load", ()=> {
+      var FSize = Math.ceil(LoSizeReq.getResponseHeader('content-length') / 1024 / 1024*100)/100;
+      LoButton.innerText += " (" + FSize + " MB)";
+    });
+
+    InteractDiv.appendChild(HiButton);
+    InteractDiv.appendChild(LoButton);
+    
+  } else {
+    var AudioURL = Audio.getAttribute("filesrc");
+    var VideoURL = Video.getAttribute("filesrc");
+
+
+    AudioRequest.open('GET', AudioURL, true);
+    VideoRequest.open('GET', VideoURL, true);
+    AudioRequest.responseType = "blob";
+    VideoRequest.responseType = "blob";
+    AudioRequest.send();
+    VideoRequest.send();
+
+    InteractDiv.appendChild(LoadingProgressVideo);
+    InteractDiv.appendChild(LoadingProgressAudio);
+  }
 
   AudioRequest.addEventListener("progress", (event)=>{
     if(event.lengthComputable) {
@@ -126,19 +198,19 @@ window.onload = function() {
     }
     switch(VolumeState) {
       case 0: //Full
-        Volume.setAttribute("src", Prefix + "volumefull.png");
+        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volumefull.png");
         Audio.volume = 1;
         break;
       case 1: //67%
-        Volume.setAttribute("src", Prefix + "volumemute.png");
+        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volumemute.png");
         Audio.volume = 0;
         break;
       case 2: //33%
-        Volume.setAttribute("src", Prefix + "volume33.png");
+        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volume33.png");
         Audio.volume = 0.33;
         break;
       case 3: //Muted
-        Volume.setAttribute("src", Prefix + "volume67.png");
+        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volume67.png");
         Audio.volume = 0.67;
         break;
     }
