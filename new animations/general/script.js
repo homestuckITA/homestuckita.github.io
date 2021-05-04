@@ -8,6 +8,9 @@ window.onload = function() {
   var HiQualityStr = "QUALITÀ ALTA";
   var LoQualityStr = "QUALITÀ BASSA";
 
+  // Prefix for images & stuff
+  var Prefix = "https://homestuckITA.github.io/new animations/general/";
+
   /* -------- */
 
   var Video = document.getElementById("video");
@@ -17,22 +20,22 @@ window.onload = function() {
   var LoadingState = 0;
 
   var PlayAgain = document.createElement("img");
-  PlayAgain.setAttribute("src", "/Images/Homestuck/GenericVideo/arrow.png");
+  PlayAgain.setAttribute("src", Prefix+"arrow.png");
   PlayAgain.setAttribute("id", "replay");
 
   var Volume = document.createElement("img");
-  Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volumefull.png");
+  Volume.setAttribute("src", Prefix+"volumefull.png");
   Volume.setAttribute("id", "volume");
   var VolumeState = 0;
 
   var LoadingScreen = document.createElement("img");
   LoadingScreen.setAttribute("style", "position:absolute; top:0px; left:0px;");
-  LoadingScreen.setAttribute("src", "/Images/Homestuck/GenericVideo/loadingbg.gif");
+  LoadingScreen.setAttribute("src", Prefix+"loadingbg.gif");
 
   InteractDiv.appendChild(LoadingScreen);
 
   var LoadingButton = document.createElement("img");
-  LoadingButton.setAttribute("src", "/Images/Homestuck/GenericVideo/start.png");
+  LoadingButton.setAttribute("src", Prefix+"start.png");
   LoadingButton.setAttribute("style", "position:absolute; top:365px; left:220.5px;cursor:pointer;");
 
   var LoadingProgressVideo = document.createElement("p");
@@ -198,19 +201,19 @@ window.onload = function() {
     }
     switch(VolumeState) {
       case 0: //Full
-        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volumefull.png");
+        Volume.setAttribute("src", Prefix+"volumefull.png");
         Audio.volume = 1;
         break;
       case 1: //67%
-        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volumemute.png");
+        Volume.setAttribute("src", Prefix+"volumemute.png");
         Audio.volume = 0;
         break;
       case 2: //33%
-        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volume33.png");
+        Volume.setAttribute("src", Prefix+"volume33.png");
         Audio.volume = 0.33;
         break;
       case 3: //Muted
-        Volume.setAttribute("src", "/Images/Homestuck/GenericVideo/volume67.png");
+        Volume.setAttribute("src", Prefix+"volume67.png");
         Audio.volume = 0.67;
         break;
     }
