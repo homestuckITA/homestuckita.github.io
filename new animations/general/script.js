@@ -5,8 +5,8 @@ window.onload = function() {
 
   /* STRINGS (translate as needed) */
 
-  var HiQualityStr = "WYSOKA JAKOŚĆ";
-  var LoQualityStr = "NISKA JAKOŚĆ";
+  var HiQualityStr = "QUALITÀ ALTA";
+  var LoQualityStr = "QUALITÀ BASSA";
 
   /* -------- */
 
